@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+        .util{
+            height: 10vh;
+            width: 100vw;
+            background-color: lightskyblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        #itag{
+            border-radius: 3vh;
+            outline: none;
+            border: none;
+            height: 50%;
+            width: 20%;
+            margin: 1%;
+            padding: 5px;
+        }
+
+        #btn{
+
+            height: 50%;
+            width: 8%;
+            border-radius: 3vh;
+            background-color: black;
+            color: white;
+            border: none;
+        }
+
+        .AllTask{
+            min-height: 90vh;
+           
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .task{
+            border: 2px solid black;
+            width: 30%;
+            height: 7vh;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 1vh;
+            border-radius: 3vh;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="util">
+        <input id="itag" type="text">
+        <button id="btn"> Add </button>
+    </div>
+
+    <div class="AllTask"></div>
+</body>
+<script src="./script.js"></script>
+</html>

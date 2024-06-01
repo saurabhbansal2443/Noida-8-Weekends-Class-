@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+
+    let obj = {
+        name : "saurabh",
+        age : 23,
+        getDetail : function(){
+            console.log("normal function ",this.name)
+        },
+        getDetail2 : ()=>{
+            console.log("Arrow function",this.name)
+        }
+    }
+
+    // obj.getDetail()
+    // obj.getDetail2()
+
+//    console.log("abc")
+
+
+function abc (){
+    console.log(this)
+}
+
+abc()
+
+    // Arrow functions 
+
+    // let abc = ()=>{
+    //     return console.log("abc is called ")
+    // }
+
+    // let sum = (a,b)=> a+b 
+
+//    console.log(sum(2,3))
+
+   
+
+
+</script>
+</html>

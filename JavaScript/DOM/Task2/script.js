@@ -2,6 +2,8 @@ let inputTag = document.getElementById("itag");
 let btn = document.getElementById("btn");
 let cont = document.querySelector(".AllTask");
 
+console.dir(inputTag)
+
 btn.addEventListener("click", function() {
     let text = inputTag.value;;
     inputTag.value = "";

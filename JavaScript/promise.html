@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    //  function makeMaggi(maggi){
+
+    //     let maggiPromise = new Promise((resolve , reject )=>{
+
+    //         if(maggi){
+    //             setTimeout(()=> resolve("Maggi is ready ") , 2000)
+    //         }else{
+    //             reject("Nahi hai ")
+    //         }
+
+    //     })
+
+    //     return maggiPromise;
+    //  }
+
+    // console.log("start")
+
+    // makeMaggi().then((result )=>{
+    //     console.log(result)
+    // }).catch((err)=>{
+    //     console.log(err)
+    // })
+
+    // console.log("end")
+
+    function bakeBread(bread) {
+      let P1 = new Promise((resolve, reject) => {
+        if (bread) {
+          setTimeout(() => resolve(bread + "baked "), 2000);
+        } else {
+          reject("Nahi hai 1");
+        }
+      });
+
+      return P1;
+    }
+
+    function AddSauce(bakedbread) {
+      let P2 = new Promise((resolve, reject) => {
+        if (bakedbread) {
+          setTimeout(() => resolve(bakedbread + " sauces "), 2000);
+        } else {
+          reject("Nahi hai 2");
+        }
+      });
+
+      return P2;
+    }
+
+    function addTopings(saucedBread) {
+      let P3 = new Promise((resolve, reject) => {
+        if (saucedBread) {
+          setTimeout(() => resolve(saucedBread + " topings"), 2000);
+        } else {
+          reject("Nahi hai 3");
+        }
+      });
+
+      return P3;
+    }
+
+    // bakeBread("bread")
+    //   .then((res) => {
+    //     console.log(1);
+    //     return AddSauce(res);
+    //   })
+    //   .then((res) => {
+    //     console.log(2);
+    //     return addTopings(res);
+    //   })
+    //   .then((res) => {
+    //     console.log(3);
+    //     let sandwich = res;
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+     
+    async function makeSandwich(){
+        try{
+        let bakedBread = await bakeBread("bread");
+        console.log(bakedBread);
+        let saucedBread = await AddSauce(bakedBread);
+        console.log(saucedBread);
+        let sandwich = await addTopings(saucedBread);
+        console.log(sandwich)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    makeSandwich();
+    
+  </script>
+</html>

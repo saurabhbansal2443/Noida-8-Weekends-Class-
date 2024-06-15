@@ -1,16 +1,17 @@
+import { Link } from "react-router-dom";
 let Navbar = () => {
   return (
     <div className="navbar bg-base-300">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">GetKart</a>
+        <Link to="/" className="btn btn-ghost text-xl">GetKart</Link>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Cart </a>
+            <Link to="/cart">Cart </Link>
           </li>
           <li>
-            <a>Profile</a>
+            <Link to="/profile"> Profile </Link>
           </li>
           <li>
             <label className="flex cursor-pointer gap-2">

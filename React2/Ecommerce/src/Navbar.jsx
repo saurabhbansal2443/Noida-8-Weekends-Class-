@@ -1,17 +1,36 @@
 import { Link } from "react-router-dom";
+import {useContext} from "react";
+import { ThemeStore } from "./utils/ThemeController";
+import { useSelector } from "react-redux";
+
 let Navbar = () => {
+
+  const {theme , setTheme } = useContext(ThemeStore);
+
+
+  let darkTheme ="navbar bg-base-300" 
+  let lightTheme = 'navbar bg-gray-200 text-black '
+
+  let cartItems = useSelector((store)=> store.cart.items);
+
+  // console.log(cartItems)
+  
+
   return (
-    <div className="navbar bg-base-300">
+    <div className={theme == "light" ? lightTheme : darkTheme}> 
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">GetKart</Link>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to="/cart">Cart </Link>
+            <Link to="/cart">Cart <sup className="text-red-600 text-xl"> {cartItems.length }</sup></Link>
           </li>
           <li>
             <Link to="/profile"> Profile </Link>
+          </li>
+          <li>
+            <Link className="text-red-600" to="/food"> Food </Link>
           </li>
           <li>
             <label className="flex cursor-pointer gap-2">
@@ -32,7 +51,14 @@ let Navbar = () => {
               <input
                 type="checkbox"
                 value="synthwave"
+
                 className="toggle theme-controller"
+                onClick={(event)=>{
+                  setTheme(theme == "light" ? 'dark': 'light');
+                  //localStorage.setItem("Theme", theme); not working 
+                  localStorage.setItem("Theme",theme == "light" ? 'dark': 'light');
+                  // event.target.checked =  theme == "light" ? true : false ; 
+                }}
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"

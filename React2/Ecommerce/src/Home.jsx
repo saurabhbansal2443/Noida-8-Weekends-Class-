@@ -1,18 +1,30 @@
-import Data from "./Data.js";
 import ProductCard from "./ProductCard.jsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ShimmerUI from "./ShimmerUI.jsx";
+import { ThemeStore } from "./utils/ThemeController.jsx";
+import AddedProductInCart from "./utils/AddedProductInCart.jsx";
+import { useSelector } from "react-redux";
 
 let Home = () => {
   const [allData, setAllData] = useState([]);
   const [productData, setProductData] = useState([]);
   const [query, setQuery] = useState("");
+  const { theme } = useContext(ThemeStore);
+  let cartItems = useSelector((store) => store.cart.items);
 
   let getData = async () => {
     let data = await fetch("https://dummyjson.com/products");
     let obj = await data.json();
     setAllData(obj.products);
     setProductData(obj.products);
+  };
+
+  let AddedComponent = AddedProductInCart(ProductCard);
+
+  let checkInCart = (id) => {
+    let objIdx = cartItems.findIndex((cartObj) => cartObj.objData.id == id);
+    console.log(objIdx);
+    return objIdx;
   };
 
   useEffect(() => {
@@ -30,7 +42,7 @@ let Home = () => {
   // },[query]);
 
   if (allData.length == 0) {
-    console.log('Render called ')
+    console.log("Render called ");
     return <ShimmerUI></ShimmerUI>;
   }
 
@@ -55,8 +67,11 @@ let Home = () => {
     setQuery("");
   };
 
+  let darkTheme = " min-h-[88vh]  w-screen bg-gray-600";
+  let lightTheme = " min-h-[88vh]  w-screen bg-gray-100";
+
   return (
-    <div className=" min-h-[88vh]  w-screen bg-gray-600">
+    <div className={theme == "light" ? lightTheme : darkTheme}>
       {console.log("Rener is called ")}
       <div className="utility flex justify-around pt-2">
         <button className="btn btn-primary" onClick={handleTopRated}>
@@ -100,9 +115,13 @@ let Home = () => {
       </div>
 
       <div className="cards flex justify-around w-100 flex-wrap ">
-        {productData.map((obj) => (
-          <ProductCard obj={obj} key={obj.id}></ProductCard>
-        ))}
+        {productData.map((obj) => {
+          return checkInCart(obj.id) != -1 ? (
+            <AddedComponent obj={obj} key={obj.id}></AddedComponent>
+          ) : (
+            <ProductCard obj={obj} key={obj.id}></ProductCard>
+          );
+        })}
       </div>
     </div>
   );

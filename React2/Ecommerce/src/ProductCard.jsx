@@ -1,7 +1,15 @@
-import {useNavigate } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { ThemeStore } from './utils/ThemeController';
+import { addCart } from './utils/Store/CartSlice';
+import { useDispatch } from 'react-redux';
+
 let ProductCard = ({obj})=>{
     let {thumbnail , title , brand , category , price , rating , id   } = obj 
+    let {theme} = useContext(ThemeStore);
+
     let Navigate = useNavigate();
+    let dispatch = useDispatch();
     
 
     let handleRouting = ()=>{
@@ -9,14 +17,17 @@ let ProductCard = ({obj})=>{
     }  
 
     let handleBuyNow = (event)=>{
-        console.log(" Buy now is clicked ")
+        dispatch(addCart(obj))
+        event.stopPropagation();
 
-        event.stopPropagation()
 
     }
 
+    let darkTheme = "card card-compact h-[23rem] w-96 bg-base-100 shadow-xl m-4"
+    let lightTheme ="card card-compact h-[23rem] w-96 bg-gray-300 shadow-xl m-4 text-black"
+
     return (
-        <div className="card card-compact h-[23rem] w-96 bg-base-100 shadow-xl m-4" onClick={handleRouting}>
+        <div className={theme == 'light' ? lightTheme : darkTheme} onClick={handleRouting}>
                 <figure><img src={thumbnail} alt="Shoes" /></figure>
                 <div className="card-body">
                     <h2 className="card-title">{title}</h2>

@@ -1,0 +1,27 @@
+import http from "http";
+import fs from "fs";
+
+let indexfile = fs.readFileSync("./index.html", "utf-8");
+let data = fs.readFileSync("./Data.json", "utf-8");
+
+let productData = JSON.parse(data).products;
+
+let server = http.createServer((req, res) => {
+    console.log(req.method)
+  if (req.method== "Get" && req.url == "/") {
+    res.end(indexfile);
+  } else if (req.url == "/api") {
+    res.end(data);
+  } else if (req.url == "/profile") {
+    res.end(" I am the profile page ");
+  } else if (req.url.startsWith("/products")) {
+    let index = req.url.split("/")[2];
+    // console.log(index);
+    let product = productData.find(obj=> obj.id == +index)
+    let {title , rating } = product
+    let modifiedhtml = indexfile.replace("**title**" , title ).replace("**rating**" , rating  );
+    res.end(modifiedhtml);
+  }
+});
+
+server.listen(8080);

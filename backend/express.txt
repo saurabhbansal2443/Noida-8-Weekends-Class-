@@ -1,0 +1,53 @@
+import express from "express";
+
+const server = express();
+
+let port = 3000;
+
+server.use(express.json());  // This is used to read the data of body 
+
+// server.use((req, res , next )=>{    // application level middleware
+//  if(req.query.password == "123"){
+//   next();
+//  }else{
+//   res.json({ response : false })
+//  }
+// });
+
+let auth = (req, res, next) => {  //custom middelware // router level middelware 
+  if (req.query.password == "123") {
+    next();
+  } else {
+    res.json({ response: false });
+  }
+};
+// routes , endpoints , api 
+server.get("/", (req, res) => {
+  res.send({ get: " This is our get reques " });
+});
+
+server.get("/product", (req, res) => {
+   console.log(req.body);
+  res.send({ get: " This is our get reques " });
+});
+
+
+server.post("/", (req, res) => {
+  res.send({ type: "post" });
+});
+
+server.put("/",auth ,  (req, res) => {
+  res.send({ type: "put" });
+});
+
+server.patch("/", (req, res) => {
+  res.send({ type: "patch" });
+});
+
+server.delete("/", (req, res) => {
+  res.send({ type: "delete" });
+});
+
+server.listen(port, () => {
+  console.log("Sever is running ");
+});

@@ -2,6 +2,11 @@ import { Link } from "react-router-dom";
 import {useContext} from "react";
 import { ThemeStore } from "./utils/ThemeController";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { userAPI } from "./constant";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { removeUser } from "./utils/Store/UserSlice";
 
 let Navbar = () => {
 
@@ -10,10 +15,20 @@ let Navbar = () => {
 
   let darkTheme ="navbar bg-base-300" 
   let lightTheme = 'navbar bg-gray-200 text-black '
+  let navigate = useNavigate(); 
+
+  let dispatch = useDispatch();
 
   let cartItems = useSelector((store)=> store.cart.items);
 
-  // console.log(cartItems)
+   let handleLogout = async () => {
+      let response = await axios.post(`${userAPI}/logout` , {} ,  { headers: { "Content-type": "application/json" }, withCredentials: true })
+
+      if(response.data.result == true ){
+        navigate("/login")
+        dispatch(removeUser())
+      }
+   }
   
 
   return (
@@ -74,6 +89,9 @@ let Navbar = () => {
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
               </svg>
             </label>
+          </li>
+          <li>
+            <p className="text-lg" onClick={handleLogout }> Logout  </p>
           </li>
         </ul>
       </div>

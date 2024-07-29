@@ -44,7 +44,7 @@ let Login = async (req, res) => {
     let passwordCheckResult = await existingUser.comparePassword(password);
 
     if (passwordCheckResult) {
-        let token = await existingUser.generateToken();
+      let token = await existingUser.generateToken();
       return res
         .status(201)
         .cookie("Token", token, cokkieOption)
@@ -59,11 +59,56 @@ let Login = async (req, res) => {
   }
 };
 
-let UpdateUser = (req, res) => {};
+let UpdateUser = async (req, res) => {
+  if (!req.user) {
+    return res
+      .status(401)
+      .send({ result: false, message: "Usernot authenticated " });
+  }
+  try {
+    let { _id } = req.user;
+    let updatedData = await User.findByIdAndUpdate(_id, req.body, {
+      new: true,
+    });
 
-let GetUser = (req, res) => {};
+    return res.status(200).send({
+      result: true,
+      message: " Data updated succesfully ",
+      data: updatedData,
+    });
+  } catch (err) {
+    return res.status(500).send({ result: false, message: err.message });
+  }
+};
 
-let Logout = (req, res) => {};
+let GetUser = (req, res) => {
+  if (!req.user) {
+    return res
+      .status(401)
+      .send({ result: false, message: "Usernot authenticated " });
+  }
+  try {
+    return res.send({ result: true, message: "User profile ", data: req.user });
+  } catch (err) {
+    return res.status(500).send({ result: false, message: err.message });
+  }
+};
+
+let Logout = (req, res) => {
+  if (!req.user) {
+    return res
+      .status(401)
+      .send({ result: false, message: "Usernot authenticated " });
+  }
+  try {
+    return res
+      .status(200)
+      .clearCookie("Token", cokkieOption)
+      .send({ result: true, message: " Logout succesfull " });
+  } catch (err) {
+    return res.status(500).send({ result: false, message: err.message });
+  }
+};
 
 export { Signup, Login, UpdateUser, GetUser, Logout };
 

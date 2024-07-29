@@ -11,13 +11,16 @@ import SingleProductPage from "./SingleProductPage.jsx";
 import ShimmerUI from "./ShimmerUI.jsx";
 import appStore from "./utils/Store/appstore.js";
 import {Provider} from 'react-redux'
+import Login from "./Login.jsx";
+import Signup from "./Signup.jsx";
+import AuthWrapper from "./AuthWrapper.jsx";
 const FoodApp = lazy(()=> import ("./FoodApp.jsx"))
 
 
 let appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <App></App>,
+    element: <AuthWrapper><App></App></AuthWrapper>,
     children: [
       {
         path: "/",
@@ -42,7 +45,13 @@ let appRouter = createBrowserRouter([
       }
     ],
     errorElement: <ErrorPage></ErrorPage>,
-  },
+  },{
+    path : "/login",
+    element :<Login></Login>
+  },{
+    path : "/signup",
+    element : <Signup></Signup>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

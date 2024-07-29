@@ -1,0 +1,1 @@
+export let userAPI = 'https://mern-noida-8-backend.onrender.com/users'
